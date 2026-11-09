@@ -1,0 +1,275 @@
+---
+import '../styles/global.css';
+import '../styles/pages.css';
+import Icon from '../components/Icon.astro';
+import { site, nav, counterLocation, whatsappLink, DEFAULT_WHATSAPP_MESSAGE } from '../data/site';
+import catalog from '../data/products.json';
+
+interface Props {
+  title: string;
+  description: string;
+  image?: string;
+  noIndex?: boolean;
+}
+
+const { title, description, image = "/images/cnc-machining.webp", noIndex = false } = Astro.props;
+const path = Astro.url.pathname;
+const canonical = Astro.site && new URL(path, Astro.site).href;
+const shareImage = Astro.site && new URL(image, Astro.site).href;
+const categories = catalog.categories;
+const counts = Object.fromEntries(
+  categories.map((category) => [
+    category.slug,
+    catalog.products.filter((product) => product.category === category.slug).length,
+  ]),
+);
+const year = new Date().getFullYear();
+
+const isCurrent = (href: string) =>
+  path === href || path === `${href}/` || path.startsWith(`${href}/`);
+
+const localBusiness = {
+  '@context': 'https://schema.org',
+  '@type': 'LocalBusiness',
+  name: site.name,
+  description: site.tagline,
+  url: Astro.site?.href,
+  telephone: site.landline.number,
+  email: site.email,
+  address: {
+    '@type': 'PostalAddress',
+    streetAddress: site.address.street,
+    addressLocality: `${site.address.area}, ${site.address.city}`,
+    postOfficeBoxNumber: site.address.poBox,
+    addressCountry: site.address.countryCode,
+  },
+  openingHoursSpecification: [
+    {
+      '@type': 'OpeningHoursSpecification',
+      dayOfWeek: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'],
+      opens: '08:00',
+      closes: '17:30',
+    },
+  ],
+};
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    {canonical && !noIndex && <link rel="canonical" href={canonical} />}
+    {(!canonical || noIndex) && <meta name="robots" content="noindex,follow" />}
+    <meta name="theme-color" content="#141616" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    {canonical && <meta property="og:url" content={canonical} />}
+    {shareImage && <meta property="og:image" content={shareImage} />}
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="preload" href="/fonts/manrope.ttf" as="font" type="font/ttf" crossorigin />
+    {canonical && path === "/" && <script type="application/ld+json" is:inline set:html={JSON.stringify(localBusiness)} />}
+    <slot name="head" />
+  </head>
+  <body>
+    <a class="skip" href="#main">Skip to content</a>
+
+    <div class="utility">
+      <div class="container utility-inner">
+        <span class="utility-place">
+          <Icon name="pin" size={14} />
+          {counterLocation}
+        </span>
+        <span class="utility-links">
+          <a href={`tel:${site.landline.number}`}><Icon name="phone" size={13} /> {site.landline.display}</a>
+          <span class="utility-hours">Mon–Sat 8:00–17:30</span>
+        </span>
+      </div>
+    </div>
+
+    <header class="site-header" data-header>
+      <div class="container header-inner">
+        <a class="brand" href="/">
+          <img class="brand-symbol" src="/favicon.svg" width="39" height="39" alt="" />
+          <span class="brand-type">
+            <span class="brand-mark">{site.wordmark}</span>
+            <span class="brand-sub">{site.wordmarkSub}</span>
+          </span>
+        </a>
+
+        <nav class="nav" aria-label="Main">
+          <a href="/" aria-current={path === "/" ? "page" : undefined}>Home</a>
+          <details class="nav-group">
+            <summary class:list={[{ "is-current": isCurrent("/products") }]}>Products</summary>
+            <div class="mega">
+              <p class="mega-label">Catalog</p>
+              <div class="mega-grid">
+                {categories.map((category) => (
+                  <a class="mega-item" href={`/products/${category.slug}/`}>
+                    <span class="mega-name">{category.name}</span>
+                    <span class="mega-blurb">{category.blurb}</span>
+                    <span class="mega-count">{counts[category.slug]} listed</span>
+                  </a>
+                ))}
+              </div>
+              <div class="mega-foot">
+                <a href="/products/">All products</a>
+                <a href="/custom-tooling/">Made to drawing</a>
+              </div>
+            </div>
+          </details>
+          {nav
+            .filter((item) => !item.dropdown)
+            .map((item) => (
+              <a href={item.href + '/'} aria-current={isCurrent(item.href) ? 'page' : undefined}>
+                {item.label}
+              </a>
+            ))}
+        </nav>
+
+        <a class="btn btn-primary header-cta" href="/request-quote/">Request a quote <Icon name="diagonal" size={16} /></a>
+
+        <details class="mobile-nav">
+          <summary><Icon name="menu" size={19} /> Menu</summary>
+          <div class="mobile-panel">
+            <div class="mobile-block">
+              <p class="mobile-label">Catalog</p>
+              <a class="mobile-cat" href="/products/" aria-current={path === "/products/" ? "page" : undefined}>All products</a>
+              {categories.map((category) => (
+                <a class="mobile-cat" href={`/products/${category.slug}/`}>
+                  <span>{category.name}</span>
+                  <span class="mobile-count">{counts[category.slug]}</span>
+                </a>
+              ))}
+            </div>
+            <div class="mobile-block">
+              {nav
+                .filter((item) => !item.dropdown)
+                .map((item) => <a class="mobile-link" href={item.href + '/'} aria-current={isCurrent(item.href) ? "page" : undefined}>{item.label}</a>)}
+            </div>
+            <a class="btn btn-primary btn-block" href="/request-quote/">Request a quote</a>
+            <a class="btn btn-wa btn-block" style="margin-top: 10px;" href={whatsappLink(DEFAULT_WHATSAPP_MESSAGE)}>
+              WhatsApp {site.whatsapp.display}
+            </a>
+          </div>
+        </details>
+      </div>
+    </header>
+
+    <main id="main">
+      <slot />
+    </main>
+
+    <footer class="site-footer">
+      <div class="container">
+        <div class="footer-top">
+          <div class="footer-brand">
+            <a class="brand" href="/">
+              <img class="brand-symbol" src="/favicon.svg" width="39" height="39" alt="" />
+              <span class="brand-type">
+                <span class="brand-mark">{site.wordmark}</span>
+                <span class="brand-sub">{site.wordmarkSub}</span>
+              </span>
+            </a>
+            <p>{site.tagline}</p>
+            <a class="footer-wa" href={whatsappLink(DEFAULT_WHATSAPP_MESSAGE)}>
+              WhatsApp {site.whatsapp.display}
+            </a>
+          </div>
+
+          <div class="footer-cols">
+            <div class="footer-col">
+              <h2>Catalog</h2>
+              <ul>
+                {categories.map((category) => (
+                  <li><a href={`/products/${category.slug}/`}>{category.name}</a></li>
+                ))}
+              </ul>
+            </div>
+            <div class="footer-col">
+              <h2>Company</h2>
+              <ul>
+                <li><a href="/about/">About</a></li>
+                <li><a href="/custom-tooling/">Custom tooling</a></li>
+                <li><a href="/industries/">Industries</a></li>
+                <li><a href="/contact/">Contact</a></li>
+                <li><a href="/request-quote/">Request a quote</a></li>
+              </ul>
+            </div>
+            <div class="footer-col">
+              <h2>Counter</h2>
+              <ul>
+                {site.address.street && <li>{site.address.street}</li>}
+                <li>{counterLocation}</li>
+                <li class="footer-gap">
+                  <a href={`tel:${site.landline.number}`}>{site.landline.display}</a>
+                </li>
+                {site.email && <li><a href={"mailto:" + site.email}>{site.email}</a></li>}
+                <li>{site.hours[0].days} · {site.hours[0].time}</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <div class="footer-bottom">
+          <span>© {year} {site.name}</span>
+          <span>{site.address.poBox}, {site.address.city}</span>
+          <a href="/privacy/">Privacy</a>
+        </div>
+      </div>
+    </footer>
+
+    <div class="action-bar">
+      <a href={`tel:${site.landline.number}`}>Call</a>
+      <a class="action-wa" href={whatsappLink(DEFAULT_WHATSAPP_MESSAGE)}>WhatsApp</a>
+      <a class="action-quote" href="/request-quote/">Get a quote</a>
+    </div>
+
+    <script>
+      // Header depth on scroll.
+      const header = document.querySelector('[data-header]');
+      const syncHeader = () => header?.classList.toggle('is-scrolled', window.scrollY > 8);
+      syncHeader();
+      window.addEventListener('scroll', syncHeader, { passive: true });
+
+      const menus = document.querySelectorAll<HTMLDetailsElement>('.nav-group, .mobile-nav');
+      document.addEventListener('keydown', (event) => {
+        if (event.key !== 'Escape') return;
+        menus.forEach((menu) => {
+          if (!menu.open) return;
+          menu.open = false;
+          menu.querySelector('summary')?.focus();
+        });
+      });
+      document.addEventListener('click', ({ target }) => {
+        if (!(target instanceof Node)) return;
+        menus.forEach((menu) => {
+          if (!menu.contains(target)) menu.open = false;
+        });
+      });
+
+      // Publish interaction events for a tag manager when one is configured.
+      document.addEventListener('click', (event) => {
+        const target = event.target;
+        if (!(target instanceof Element)) return;
+        const link = target.closest('a');
+        if (!(link instanceof HTMLAnchorElement)) return;
+        const href = link.getAttribute('href') ?? '';
+        const name = href.startsWith('tel:')
+          ? 'call'
+          : href.startsWith('https://wa.me')
+            ? 'whatsapp'
+            : href === '/request-quote/'
+              ? 'rfq_start'
+              : null;
+        if (!name) return;
+        const w = window as unknown as { dataLayer?: Record<string, string>[] };
+        w.dataLayer = w.dataLayer ?? [];
+        w.dataLayer.push({ event: name });
+      });
+    </script>
+  </body>
+</html>

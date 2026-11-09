@@ -1,0 +1,72 @@
+---
+import Base from '../layouts/Base.astro';
+import PageHero from '../components/PageHero.astro';
+import Breadcrumbs from '../components/Breadcrumbs.astro';
+import QuoteBand from '../components/QuoteBand.astro';
+import Icon from '../components/Icon.astro';
+import { counterLocation, site, whatsappLink, DEFAULT_WHATSAPP_MESSAGE } from '../data/site';
+---
+
+<Base title="Contact Torque Moulds Factory | Al Quoz, Dubai" description="Call or message Torque Moulds Factory for tooling enquiries and find our Al Quoz counter on Google Maps.">
+  <PageHero eyebrow="Contact" title="Talk to the tooling counter." lede="Ask about a tool, share your machine details, or confirm where to collect your order in Al Quoz.">
+    <Breadcrumbs slot="breadcrumb" current="Contact" />
+  </PageHero>
+
+  <section class="section">
+    <div class="container">
+      <div class="section-head">
+        <p class="eyebrow">01 / Get in touch</p>
+        <h2>Reach the right person.</h2>
+      </div>
+      <div class="card-grid">
+        <article class="info-card">
+          <span class="info-icon"><Icon name="phone" size={23} /></span>
+          <h3>Call the counter</h3>
+          <p>Speak to us about fit, availability or collection.</p>
+          <a class="link-more" href={'tel:' + site.landline.number}>{site.landline.display}</a>
+        </article>
+        <article class="info-card">
+          <span class="info-icon"><Icon name="drawing" size={23} /></span>
+          <h3>Send an enquiry</h3>
+          <p>Share a part number, machine model or drawing on WhatsApp.</p>
+          <a class="link-more" href={whatsappLink(DEFAULT_WHATSAPP_MESSAGE)}>WhatsApp {site.whatsapp.display}</a>
+          {site.email && <a class="link-more" href={'mailto:' + site.email}>{site.email}</a>}
+        </article>
+        <article class="info-card">
+          <span class="info-icon"><Icon name="pin" size={23} /></span>
+          <h3>Find Torque on Google</h3>
+          <p>Search for Torque Moulds Factory on Google for location and business information.</p>
+          <a class="link-more" href={site.maps.google}>Find Torque on Google</a>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section-tint">
+    <div class="container editorial-grid">
+      <div>
+        <p class="eyebrow">02 / Collection and visits</p>
+        <h2>Visit us in Al Quoz.</h2>
+        <p>Contact the counter before setting out to confirm collection and the exact entrance.</p>
+        <dl class="info-list">
+          <div>
+            <dt>Location</dt>
+            <dd>{site.address.street && <>{site.address.street}<br /></>}{counterLocation}</dd>
+          </div>
+          <div>
+            <dt>Counter hours</dt>
+            <dd>{site.hours.map((entry) => <span class="contact-hours">{entry.days} · {entry.time}</span>)}</dd>
+          </div>
+        </dl>
+      </div>
+      <div class="location-card">
+        <span class="info-icon"><Icon name="pin" size={25} /></span>
+        <p class="eyebrow eyebrow--light">United Arab Emirates</p>
+        <h3>{counterLocation}</h3>
+        <a class="btn btn-primary" href={site.maps.directions}>Open Google Maps <Icon name="diagonal" size={17} /></a>
+      </div>
+    </div>
+  </section>
+
+  <QuoteBand title="Need pricing or availability?" description="Build a tooling list or describe the job in a quote request." />
+</Base>

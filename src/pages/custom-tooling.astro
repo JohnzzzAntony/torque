@@ -1,0 +1,81 @@
+---
+import Base from '../layouts/Base.astro';
+import PageHero from '../components/PageHero.astro';
+import Breadcrumbs from '../components/Breadcrumbs.astro';
+import QuoteBand from '../components/QuoteBand.astro';
+import Icon from '../components/Icon.astro';
+import { site } from '../data/site';
+
+const capabilities = [
+  { title: 'Punching and forming', text: 'Special punches, matching dies, strippers and lance-and-form tooling.' },
+  { title: 'Bending and stamping', text: 'Sectional press brake tools, forming dies, blanking dies and replacement inserts.' },
+  { title: 'Mould components', text: 'Mould bases, guide components and ejector systems quoted to your requirements.' },
+];
+
+const steps = [
+  { title: 'Send the requirement', text: 'Share your drawing or dimensioned photo, machine model, material and required quantity.' },
+  { title: 'Confirm the application', text: 'We review the tool style, fit and clearance against the information you provide.' },
+  { title: 'Review the quote', text: 'We confirm pricing, lead time and collection or delivery options with the quote.' },
+];
+---
+
+<Base title="Custom Tooling to Drawing | Torque Moulds Factory Dubai" description="Enquire about special punches, dies, sectional press brake tools and mould components. Share your drawing, machine and material details." image="/images/custom-tooling.webp">
+  <PageHero eyebrow="Custom tooling" title="Made to your drawing." lede="Quote a special tool for your part, machine and material. Start with a drawing, an existing part number or a dimensioned photo." image="/images/custom-tooling.webp">
+    <Breadcrumbs slot="breadcrumb" current="Custom tooling" />
+    <div slot="actions" class="hero-actions">
+      <a class="btn btn-primary" href="/request-quote/">Start a custom quote <Icon name="diagonal" size={17} /></a>
+    </div>
+  </PageHero>
+
+  <section class="section">
+    <div class="container">
+      <div class="section-head">
+        <p class="eyebrow">01 / Capabilities</p>
+        <h2>Tools we quote to specification.</h2>
+      </div>
+      <div class="card-grid">
+        {capabilities.map((capability, index) => (
+          <article class="info-card">
+            <span class="info-index" aria-hidden="true">{String(index + 1).padStart(2, '0')}</span>
+            <h3>{capability.title}</h3>
+            <p>{capability.text}</p>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section section-tint">
+    <div class="container editorial-grid">
+      <div>
+        <p class="eyebrow">02 / Technical brief</p>
+        <h2>What to send with your enquiry.</h2>
+        <p>Attach the drawing in WhatsApp or your email app when you send the enquiry. For a sample part, include photos with a scale and mark any critical dimensions.</p>
+      </div>
+      <div class="info-card">
+        <h3>Drawing checklist</h3>
+        <ul class="detail-checklist">
+          <li>DXF, DWG, PDF or dimensioned photos</li>
+          <li>Machine make, model and station or holder</li>
+          <li>Material, thickness and required clearances</li>
+          <li>Quantity, target date and existing part number if known</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <div class="section-head">
+        <p class="eyebrow">03 / Quote process</p>
+        <h2>From drawing to written quote.</h2>
+      </div>
+      <ol class="steps numbered-steps">
+        {steps.map((step) => <li class="step"><h3>{step.title}</h3><p>{step.text}</p></li>)}
+      </ol>
+      <p class="service-note"><strong>Sharpening or regrinding.</strong> <a href={'tel:' + site.landline.number}>Call the counter</a> to discuss the tool before sending it in.</p>
+    </div>
+  </section>
+
+  <QuoteBand title="Ready to share the drawing?" description="Tell us the operation, machine and material so we can review the tooling requirement." />
+</Base>

@@ -1,0 +1,22 @@
+---
+interface Props {
+  eyebrow?: string;
+  title: string;
+  lede?: string;
+  compact?: boolean;
+  image?: string;
+}
+
+const { eyebrow, title, lede, compact = false, image } = Astro.props;
+---
+
+<header class:list={['page-hero', { 'page-hero--compact': compact, 'page-hero--photo': image }]}>
+  {image && <img class="page-hero-image" src={image} alt="" width="508" height="508" fetchpriority="high" />}
+  <div class="container">
+    <slot name="breadcrumb" />
+    {eyebrow && <p class="eyebrow eyebrow--light">{eyebrow}</p>}
+    <h1>{title}</h1>
+    {lede && <p class="lede">{lede}</p>}
+    <slot name="actions" />
+  </div>
+</header>

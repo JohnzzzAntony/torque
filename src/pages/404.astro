@@ -1,0 +1,21 @@
+---
+import Base from '../layouts/Base.astro';
+import PageHero from '../components/PageHero.astro';
+import Icon from '../components/Icon.astro';
+---
+
+<Base title="Page Not Found | Torque Moulds Factory" description="Find your way back to the Torque tooling catalog or contact our Al Quoz counter." noIndex>
+  <PageHero eyebrow="404 / Page not found" title="Let’s get you to the right tool." lede="This page may have moved. Start with the catalog, or talk to the counter about the tool you need." image="/images/cnc-machining.webp">
+    <div slot="actions" class="hero-actions">
+      <a class="btn btn-primary" href="/products/">Browse the catalog <Icon name="arrow" size={18} /></a>
+      <a class="btn btn-ghost-light" href="/">Back to home</a>
+    </div>
+  </PageHero>
+  <section class="section">
+    <div class="container card-grid">
+      <div class="info-card"><h2>Special tooling</h2><p>Request a tool to your drawing.</p><a class="link-more" href="/custom-tooling/">Custom tooling</a></div>
+      <div class="info-card"><h2>Pricing and fit</h2><p>Send us your machine and requirements.</p><a class="link-more" href="/request-quote/">Request a quote</a></div>
+      <div class="info-card"><h2>Speak to Torque</h2><p>Call or message our Al Quoz counter.</p><a class="link-more" href="/contact/">Contact</a></div>
+    </div>
+  </section>
+</Base>

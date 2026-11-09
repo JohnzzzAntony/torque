@@ -1,0 +1,25 @@
+---
+import Base from '../layouts/Base.astro';
+import PageHero from '../components/PageHero.astro';
+import Breadcrumbs from '../components/Breadcrumbs.astro';
+---
+
+<Base title="Privacy and Enquiries | Torque Moulds Factory" description="How the Torque website stores quote items and opens contact and location services.">
+  <PageHero eyebrow="Site information" title="Privacy and enquiries." lede="How this website handles your quote list and opens contact services." compact>
+    <Breadcrumbs slot="breadcrumb" current="Privacy" />
+  </PageHero>
+  <section class="section">
+    <div class="container">
+      <div class="prose privacy-copy">
+        <h2>Your quote list</h2>
+        <p>Your selected tools and quantities are saved in your browser so they remain available as you browse. You can remove individual tools from the quote list or clear the site data in your browser.</p>
+        <h2>Preparing a request</h2>
+        <p>The quote form prepares a message on this page. Contact details you type are held in the form until you leave the page. Choosing a sending option opens that service with the message you prepared. Send any drawings or photos as attachments from that service.</p>
+        <h2>External services</h2>
+        <p>WhatsApp and Google are external services. Their own terms and privacy policies apply when you use their links. If an email option is available, it opens the mail app on your device.</p>
+        <h2>Contact</h2>
+        <p>For questions about an enquiry or information you have shared, <a href="/contact/">contact the Torque counter</a>.</p>
+      </div>
+    </div>
+  </section>
+</Base>

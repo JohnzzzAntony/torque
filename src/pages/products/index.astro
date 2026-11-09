@@ -1,0 +1,31 @@
+---
+import Base from '../../layouts/Base.astro';
+import PageHero from '../../components/PageHero.astro';
+import Breadcrumbs from '../../components/Breadcrumbs.astro';
+import CategoryGrid from '../../components/CategoryGrid.astro';
+import QuoteBand from '../../components/QuoteBand.astro';
+import Icon from '../../components/Icon.astro';
+---
+
+<Base title="Industrial Tooling Catalog | Torque Moulds Factory Dubai" description="Browse CNC punching tools, press brake tooling, dies, bandsaw blades, mould components and machine tools from Torque Moulds Factory.">
+  <PageHero eyebrow="Product catalog" title="Tooling for every operation." lede="Explore six tooling families for punching, bending, forming and cutting. Build an enquiry around the configuration you need." image="/images/dies-and-tooling.webp">
+    <Breadcrumbs slot="breadcrumb" current="Products" />
+    <div slot="actions" class="hero-actions">
+      <a class="btn btn-primary" href="#tooling-families">Browse tool families <Icon name="arrow" size={18} /></a>
+      <a class="btn btn-ghost-light" href="/request-quote/">Review your quote</a>
+    </div>
+  </PageHero>
+
+  <section class="section" aria-labelledby="tooling-families">
+    <div class="container">
+      <div class="section-head">
+        <p class="eyebrow">01 / Tooling families</p>
+        <h2 id="tooling-families">Shop by application.</h2>
+        <p>Compare configurations and share your machine model. Torque confirms fit and availability before quoting.</p>
+      </div>
+      <CategoryGrid />
+    </div>
+  </section>
+
+  <QuoteBand title="Need a tool to drawing?" description="Share the part, material and machine details to start a custom tooling enquiry." link="/custom-tooling/" label="Explore custom tooling" />
+</Base>

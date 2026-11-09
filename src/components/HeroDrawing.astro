@@ -1,0 +1,81 @@
+---
+// Punch-and-die cross-section, drawn to scale as the hero image.
+// Die opening 96 units, punch 76 units: 10 units of clearance each side.
+---
+<figure class="hero-figure">
+  <svg class="hero-svg" viewBox="0 0 620 480" role="img" aria-labelledby="dwg-title dwg-desc">
+    <title id="dwg-title">Cross-section drawing of a punch and die</title>
+    <desc id="dwg-desc">
+      A turret punch descending through a sheet-metal strip into a die opening, seen in
+      section, with dimension lines for die width, material thickness and punch clearance.
+    </desc>
+
+    <defs>
+      <pattern id="hatch" width="7" height="7" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
+        <line x1="0" y1="0" x2="0" y2="7" stroke="#14181C" stroke-width="1" stroke-opacity="0.16" />
+      </pattern>
+      <marker
+        id="dim-arrow"
+        viewBox="0 0 10 10"
+        refX="9"
+        refY="5"
+        markerWidth="7"
+        markerHeight="7"
+        orient="auto-start-reverse"
+      >
+        <path d="M0,0 L10,5 L0,10 Z" fill="#1646A0" />
+      </marker>
+    </defs>
+
+    <!-- die block -->
+    <path d="M60 248 H540 V392 H60 Z" fill="#F2F4F5" stroke="#14181C" stroke-width="1.5" />
+    <path d="M60 248 H540 V392 H60 Z" fill="url(#hatch)" />
+    <rect x="252" y="248" width="96" height="144" fill="#E9EBEC" stroke="#14181C" stroke-width="1.5" />
+
+    <!-- workpiece -->
+    <rect x="60" y="228" width="480" height="20" fill="#DDE2E5" stroke="#14181C" stroke-width="1.5" />
+
+    <!-- punch -->
+    <path
+      d="M262 96 L338 96 L338 236 L334 300 L266 300 L262 236 Z"
+      fill="#F8F9FA"
+      stroke="#14181C"
+      stroke-width="1.5"
+    />
+    <rect x="210" y="62" width="180" height="34" fill="#F8F9FA" stroke="#14181C" stroke-width="1.5" />
+    <rect x="150" y="20" width="300" height="42" fill="#EDEFF1" stroke="#14181C" stroke-width="1.5" />
+
+    <!-- dimensions -->
+    <g stroke="#1646A0" stroke-width="1" fill="none">
+      <path d="M60 392 V430" />
+      <path d="M540 392 V430" />
+      <path d="M60 422 H540" marker-start="url(#dim-arrow)" marker-end="url(#dim-arrow)" />
+      <path d="M60 228 H30" />
+      <path d="M60 248 H30" />
+      <path d="M42 228 V248" marker-start="url(#dim-arrow)" marker-end="url(#dim-arrow)" />
+      <path d="M343 258 L420 214 H512" />
+    </g>
+    <circle cx="343" cy="258" r="2.5" fill="#1646A0" />
+
+    <text class="dim" x="300" y="412" text-anchor="middle">120.0</text>
+    <text class="dim" x="26" y="238" text-anchor="middle" transform="rotate(-90 26 238)">2.0</text>
+    <text class="dim" x="420" y="205">CLEARANCE 0.20</text>
+
+    <!-- callouts -->
+    <text class="note note-halo" x="166" y="47">RAM</text>
+    <text class="note note-halo" x="352" y="156">PUNCH</text>
+    <text class="note note-halo" x="72" y="220">WORKPIECE</text>
+    <text class="note note-halo" x="78" y="272">DIE</text>
+
+    <!-- scale ticks -->
+    <g stroke="#1646A0" stroke-opacity="0.45" stroke-width="1">
+      {Array.from({ length: 25 }, (_, i) => 60 + i * 20).map((x, i) => (
+        <line x1={x} y1="466" x2={x} y2={i % 5 === 0 ? 452 : 460} />
+      ))}
+    </g>
+  </svg>
+  <figcaption>
+    <span>Section: punch &amp; die</span>
+    <span>Scale 1:2 · mm</span>
+  </figcaption>
+</figure>

@@ -1,0 +1,227 @@
+---
+import Base from '../layouts/Base.astro';
+import PageHero from '../components/PageHero.astro';
+import Breadcrumbs from '../components/Breadcrumbs.astro';
+import Icon from '../components/Icon.astro';
+import { site, whatsappLink, DEFAULT_WHATSAPP_MESSAGE } from '../data/site';
+---
+
+<Base title="Request a Tooling Quote | Torque Moulds Factory Dubai" description="Build a quote list or describe a custom tooling job and send your enquiry to Torque Moulds Factory in Al Quoz.">
+  <PageHero eyebrow="Quote request" title="Tell us what you need." lede="Review your tooling list or describe the job. Prepare your enquiry here, then send it to the Torque counter." compact>
+    <Breadcrumbs slot="breadcrumb" current="Request a quote" />
+  </PageHero>
+
+  <div class="container">
+    <div class="rfq-grid">
+      <div>
+        <noscript>
+          <div class="side-card">
+            <h2>Send your tooling enquiry</h2>
+            <p>Share your machine, tool requirements and quantity directly with the counter.</p>
+            <a class="btn btn-primary" href={whatsappLink(DEFAULT_WHATSAPP_MESSAGE)}>Open WhatsApp</a>
+          </div>
+        </noscript>
+        <form class="form-card quote-form" data-rfq hidden>
+          <div class="quote-form-section">
+            <p class="eyebrow">01 / Tooling</p>
+            <h2>Your quote list</h2>
+            <ul class="quote-list" data-quote-list></ul>
+            <p class="quote-empty" data-quote-empty>Add tools from the <a href="/products/">catalog</a> or describe the job below.</p>
+            <p class="form-error" role="alert" data-quote-error hidden>Your browser blocked the update to your quote list. You can include the requirements in the message below.</p>
+            <p class="sr-only" role="status" data-list-status></p>
+          </div>
+
+          <div class="quote-form-section">
+            <p class="eyebrow">02 / Your details</p>
+            <h2>Tell us about the job.</h2>
+            <div class="field-row">
+              <div class="field">
+                <label for="name">Name <span class="req">*</span></label>
+                <input id="name" name="name" autocomplete="name" maxlength="100" required />
+              </div>
+              <div class="field">
+                <label for="company">Company</label>
+                <input id="company" name="company" autocomplete="organization" maxlength="120" />
+              </div>
+            </div>
+            <div class="field-row">
+              <div class="field">
+                <label for="phone">Mobile / WhatsApp</label>
+                <input id="phone" name="phone" type="tel" autocomplete="tel" maxlength="40" />
+              </div>
+              <div class="field">
+                <label for="email">Email</label>
+                <input id="email" name="email" type="email" autocomplete="email" maxlength="160" />
+              </div>
+            </div>
+            <div class="field">
+              <label for="machine">Machine make and model</label>
+              <input id="machine" name="machine" maxlength="160" placeholder="e.g. Amada EM 2510, thick turret" />
+            </div>
+            <div class="field">
+              <label for="details">Tooling requirements <span class="req" data-details-required hidden>*</span></label>
+              <textarea id="details" name="details" rows="4" maxlength="1600" placeholder="Part number, material, thickness, quantity or special requirements"></textarea>
+            </div>
+            <p class="service-note">For a custom tool, attach the drawing or photos in WhatsApp{site.email ? ' or your email app' : ''} when you send the enquiry.</p>
+            <button class="btn btn-primary btn-block" type="submit">Prepare my enquiry <Icon name="arrow" size={18} /></button>
+          </div>
+        </form>
+
+        <section class="result-panel" aria-labelledby="quote-preview-title" data-result hidden>
+          <p class="eyebrow">03 / Review and send</p>
+          <h2 id="quote-preview-title" tabindex="-1" data-result-heading>Review your message.</h2>
+          <p>Check your details, then open a sending option. Attach any drawings in the app before sending.</p>
+          <div class="field"><label for="quote-preview">Prepared message</label><textarea id="quote-preview" rows="8" readonly data-message></textarea></div>
+          <div class="hero-actions">
+            <a class="btn btn-primary" data-result-wa href={whatsappLink(DEFAULT_WHATSAPP_MESSAGE)}>Open WhatsApp <Icon name="diagonal" size={17} /></a>
+            {site.email && <a class="btn btn-outline" data-result-mail href={'mailto:' + site.email}>Open email</a>}
+            <button class="btn btn-outline" data-copy type="button" hidden>Copy message</button>
+          </div>
+          <p class="copy-status" role="status" data-copy-status></p>
+        </section>
+      </div>
+
+      <aside class="rfq-aside" aria-label="Quote help">
+        <div class="side-card">
+          <span class="info-icon"><Icon name="phone" size={22} /></span>
+          <h2>Prefer to speak to us?</h2>
+          <p>{site.hours[0].days} · {site.hours[0].time}</p>
+          <a class="btn btn-outline btn-block" href={'tel:' + site.landline.number}>Call {site.landline.display}</a>
+          <a class="link-more" href={whatsappLink(DEFAULT_WHATSAPP_MESSAGE)}>Message the counter</a>
+        </div>
+        <div class="side-card">
+          <h2>What happens next</h2>
+          <ol class="quote-next">
+            <li>We check the tool and machine fit.</li>
+            <li>We confirm availability, lead time and pricing.</li>
+            <li>Arrange collection in Al Quoz or delivery.</li>
+          </ol>
+          <a class="link-more" href="/contact/">Counter location</a>
+        </div>
+        <a class="link-more" href="/privacy/">How quote information is handled</a>
+      </aside>
+    </div>
+  </div>
+</Base>
+
+<script>
+  import { getQuote, removeFromQuote, setQty, quoteLines, watchQuote, quoteItemLink } from '../lib/quote';
+  import { whatsappLink, mailtoLink } from '../data/site';
+
+  const form = document.querySelector<HTMLFormElement>('[data-rfq]');
+  const list = document.querySelector<HTMLUListElement>('[data-quote-list]');
+  const empty = document.querySelector<HTMLElement>('[data-quote-empty]');
+  const result = document.querySelector<HTMLElement>('[data-result]');
+  const details = document.querySelector<HTMLTextAreaElement>('#details');
+  const required = document.querySelector<HTMLElement>('[data-details-required]');
+  const error = document.querySelector<HTMLElement>('[data-quote-error]');
+  const status = document.querySelector<HTMLElement>('[data-list-status]');
+  const message = document.querySelector<HTMLTextAreaElement>('[data-message]');
+  const waLink = document.querySelector<HTMLAnchorElement>('[data-result-wa]');
+  const mailLink = document.querySelector<HTMLAnchorElement>('[data-result-mail]');
+  const copy = document.querySelector<HTMLButtonElement>('[data-copy]');
+  const copyStatus = document.querySelector<HTMLElement>('[data-copy-status]');
+
+  if (form && list && empty && result && details && required && error && status && message && waLink) {
+    const render = () => {
+      const items = getQuote();
+      list.replaceChildren();
+      empty.hidden = items.length > 0;
+      details.required = items.length === 0;
+      required.hidden = !details.required;
+      status.textContent = items.length + (items.length === 1 ? ' tool in your quote.' : ' tools in your quote.');
+
+      items.forEach((item) => {
+        const row = document.createElement('li');
+        const info = document.createElement('span');
+        const name = document.createElement('a');
+        name.href = quoteItemLink(item);
+        name.textContent = item.product.name;
+        const spec = document.createElement('small');
+        spec.textContent = (item.product.verified ? item.sku + ' · ' : 'Example · ') + item.product.spec;
+        info.append(name, spec);
+
+        const qty = document.createElement('input');
+        qty.type = 'number';
+        qty.min = '1';
+        qty.max = '999';
+        qty.value = String(item.qty);
+        qty.className = 'qty';
+        qty.setAttribute('aria-label', 'Quantity of ' + item.product.name);
+        qty.addEventListener('change', () => {
+          error.hidden = setQty(item.sku, Number(qty.value));
+          qty.value = String(getQuote().find(({ sku }) => sku === item.sku)?.qty ?? item.qty);
+        });
+
+        const remove = document.createElement('button');
+        remove.type = 'button';
+        remove.className = 'remove';
+        remove.textContent = 'Remove';
+        remove.setAttribute('aria-label', 'Remove ' + item.product.name);
+        remove.addEventListener('click', () => {
+          error.hidden = removeFromQuote(item.sku);
+          if (!error.hidden) return;
+          result.hidden = true;
+          const index = Array.from(list.children).indexOf(row);
+          render();
+          const next = list.querySelectorAll<HTMLButtonElement>('.remove');
+          (next[Math.min(index, next.length - 1)] ?? details).focus();
+        });
+
+        row.append(info, qty, remove);
+        list.append(row);
+      });
+    };
+
+    render();
+    form.hidden = false;
+    form.addEventListener('input', () => { result.hidden = true; });
+    watchQuote(() => {
+      render();
+      result.hidden = true;
+    });
+
+    form.addEventListener('submit', (event) => {
+      event.preventDefault();
+      const data = new FormData(form);
+      const read = (key: string) => String(data.get(key) ?? '').trim();
+      const name = read('name');
+      const items = getQuote();
+      if (!name || (!items.length && !read('details'))) {
+        const field = name ? details : form.querySelector<HTMLInputElement>('#name');
+        field?.setCustomValidity('Please enter ' + (name ? 'your tooling requirements.' : 'your name.'));
+        field?.reportValidity();
+        field?.addEventListener('input', () => field.setCustomValidity(''), { once: true });
+        return;
+      }
+
+      const lines = ['Tooling enquiry for Torque Moulds Factory', '', 'Name: ' + name];
+      for (const [key, label] of [['company', 'Company'], ['phone', 'Mobile / WhatsApp'], ['email', 'Email'], ['machine', 'Machine']]) {
+        const value = read(key);
+        if (value) lines.push(label + ': ' + value);
+      }
+      if (items.length) lines.push('', 'Tools:', quoteLines(items));
+      if (read('details')) lines.push('', 'Requirements:', read('details'));
+
+      message.value = lines.join('\n');
+      waLink.href = whatsappLink(message.value);
+      if (mailLink) mailLink.href = mailtoLink('Tooling enquiry from ' + name, message.value);
+      if (copyStatus) copyStatus.textContent = '';
+      result.hidden = false;
+      result.querySelector<HTMLElement>('[data-result-heading]')?.focus();
+    });
+
+    if (copy && copyStatus && navigator.clipboard) {
+      copy.hidden = false;
+      copy.addEventListener('click', async () => {
+        try {
+          await navigator.clipboard.writeText(message.value);
+          copyStatus.textContent = 'Message copied.';
+        } catch {
+          message.select();
+          copyStatus.textContent = 'Use your device’s copy command to copy the selected message.';
+        }
+      });
+    }
+  }
+</script>

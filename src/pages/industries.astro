@@ -1,0 +1,39 @@
+---
+import Base from '../layouts/Base.astro';
+import PageHero from '../components/PageHero.astro';
+import Breadcrumbs from '../components/Breadcrumbs.astro';
+import QuoteBand from '../components/QuoteBand.astro';
+import catalog from '../data/products.json';
+import { industries } from '../data/site';
+---
+
+<Base title="Industries and Tooling Applications | Torque Moulds Factory" description="Explore tooling applications for HVAC, lifts, enclosures, signage, fabrication and automotive parts.">
+  <PageHero eyebrow="Industries" title="Tooling for sheet-metal production." lede="Explore tooling by application, from duct flanges and enclosures to formed panels and repeat-production parts." image="/images/cnc-machining.webp">
+    <Breadcrumbs slot="breadcrumb" current="Industries" />
+  </PageHero>
+
+  <section class="section">
+    <div class="container">
+      <div class="section-head">
+        <p class="eyebrow">01 / Applications</p>
+        <h2>Find tooling for your operation.</h2>
+        <p>Choose a starting point, then share the machine and material so we can check the application.</p>
+      </div>
+      <div class="card-grid">
+        {industries.map((industry, index) => {
+          const category = catalog.categories.find(({ slug }) => slug === industry.category)!;
+          return (
+            <article class="info-card">
+              <span class="info-index" aria-hidden="true">{String(index + 1).padStart(2, '0')}</span>
+              <h3>{industry.name}</h3>
+              <p>{industry.note}</p>
+              <a class="link-more" href={'/products/' + category.slug + '/'}>{category.name}</a>
+            </article>
+          );
+        })}
+      </div>
+    </div>
+  </section>
+
+  <QuoteBand title="Tell us what you are making." description="Share a part drawing for special profiles, short runs or replacement tooling." link="/custom-tooling/" label="Explore custom tooling" />
+</Base>

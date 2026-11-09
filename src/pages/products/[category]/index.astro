@@ -1,0 +1,177 @@
+---
+import Base from '../../../layouts/Base.astro';
+import PageHero from '../../../components/PageHero.astro';
+import Breadcrumbs from '../../../components/Breadcrumbs.astro';
+import ProductCard from '../../../components/ProductCard.astro';
+import QuoteBar from '../../../components/QuoteBar.astro';
+import HeroScene from '../../../components/HeroScene.astro';
+import catalog from '../../../data/products.json';
+import { products as allProducts } from '../../../data/catalog';
+
+export function getStaticPaths() {
+  return catalog.categories.map((category) => ({ params: { category: category.slug }, props: { category } }));
+}
+
+const { category } = Astro.props;
+const products = allProducts.filter((product) => product.category === category.slug);
+const hasStock = products.some((product) => product.verified && product.inStock);
+const facets = category.filters.filter((facet) => facet.key !== 'stock' || hasStock);
+const image = '/images/' + category.slug + '.webp';
+---
+
+<Base title={category.name + ' in Dubai | Torque Moulds Factory'} description={category.intro} image={image}>
+  <PageHero eyebrow="Tooling catalog" title={category.name} lede={category.intro} image={image}>
+    <Breadcrumbs slot="breadcrumb" links={[{ name: 'Products', href: '/products/' }]} current={category.name} />
+  </PageHero>
+
+  <div class="container">
+    <div class="catalog-layout">
+      <details class="filter-panel" data-filter-panel hidden>
+        <summary>Filter tools</summary>
+        <form class="filters" data-filters aria-label={'Filter ' + category.name}>
+          {facets.map((facet) => (
+            <fieldset class="facet">
+              <legend>{facet.label}</legend>
+              {facet.options.map((option) => (
+                <label><input type="checkbox" name={facet.key} value={option} /><span>{option}</span></label>
+              ))}
+            </fieldset>
+          ))}
+          <div class="filters-foot">
+            <button class="btn btn-outline btn-sm btn-block" type="button" data-filter-reset>Clear filters</button>
+          </div>
+        </form>
+      </details>
+
+      <div class="catalog-results">
+        <div class="catalog-heading">
+          <p class="eyebrow">Browse configurations</p>
+          <h2>Find the tool for your job.</h2>
+          <p>Use these configurations to describe what you need. Torque confirms specifications, compatibility and availability when quoting.</p>
+        </div>
+        <div class="catalog-toolbar">
+          <p class="result-count" data-result-count aria-live="polite">{products.length} tools</p>
+          <div class="catalog-controls" data-catalog-controls hidden>
+            <label class="catalog-search"><span class="sr-only">Search tools</span><input type="search" placeholder="Search tools" data-search-input /></label>
+            <label class="sort-field">
+              <span>Sort</span>
+              <select data-sort>
+                <option value="default">Catalog order</option>
+                <option value="name">Name A–Z</option>
+                {hasStock && <option value="stock">In stock first</option>}
+              </select>
+            </label>
+          </div>
+        </div>
+
+        <div class="product-grid" data-grid>
+          {products.map((product) => <ProductCard product={product} />)}
+          <div class="empty-state" data-empty hidden>
+            <strong>No tools match your search.</strong>
+            <p>Clear the filters or <a href="/request-quote/">send your specification</a> to the counter.</p>
+          </div>
+        </div>
+
+        <div class="custom-card">
+          <div><strong>Need a different configuration?</strong><p>Send a drawing or a photo of the part for a custom quote.</p></div>
+          <a class="btn btn-outline" href="/custom-tooling/">Explore custom tooling</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  {category.slug === 'cnc-punching-tools' && (
+    <section class="section" aria-labelledby="tooling-demo-title">
+      <div class="container">
+        <div class="tooling-demo">
+          <p class="eyebrow eyebrow--light">Tooling anatomy</p>
+          <h2 id="tooling-demo-title">Punch and die assembly</h2>
+          <HeroScene />
+        </div>
+      </div>
+    </section>
+  )}
+
+  <QuoteBar />
+</Base>
+
+<script>
+  import { initQuoteButtons } from '../../../lib/quote';
+  initQuoteButtons();
+
+  const panel = document.querySelector<HTMLDetailsElement>('[data-filter-panel]');
+  const controls = document.querySelector<HTMLElement>('[data-catalog-controls]');
+  const form = document.querySelector<HTMLFormElement>('[data-filters]');
+  const grid = document.querySelector<HTMLElement>('[data-grid]');
+  const count = document.querySelector<HTMLElement>('[data-result-count]');
+  const empty = document.querySelector<HTMLElement>('[data-empty]');
+  const search = document.querySelector<HTMLInputElement>('[data-search-input]');
+  const sort = document.querySelector<HTMLSelectElement>('[data-sort]');
+  const cards = Array.from(document.querySelectorAll<HTMLElement>('[data-product]'));
+
+  if (panel && controls && form && grid && count && empty && search && sort) {
+    panel.hidden = false;
+    panel.open = window.matchMedia('(min-width: 961px)').matches;
+    controls.hidden = false;
+    const inputs = Array.from(form.querySelectorAll<HTMLInputElement>('input[type="checkbox"]'));
+    const params = new URLSearchParams(location.search);
+
+    inputs.forEach((input) => {
+      input.checked = params.getAll(input.name).some((value) => value.toLowerCase() === input.value.toLowerCase());
+    });
+    search.value = params.get('q') ?? '';
+    if (Array.from(sort.options).some(({ value }) => value === params.get('sort'))) {
+      sort.value = params.get('sort')!;
+    }
+
+    const apply = (updateUrl = false) => {
+      const active = new Map<string, string[]>();
+      inputs.filter((input) => input.checked).forEach(({ name, value }) => {
+        const values = active.get(name) ?? [];
+        values.push(value.toLowerCase());
+        active.set(name, values);
+      });
+      const terms = search.value.toLowerCase().trim().split(/\s+/).filter(Boolean);
+      let shown = 0;
+
+      cards.forEach((card) => {
+        const visible = terms.every((term) => card.dataset.search?.toLowerCase().includes(term))
+          && [...active].every(([key, values]) => key === 'stock'
+            ? card.dataset.stock === '1'
+            : (card.dataset[key] ?? '').toLowerCase().split('|').some((value) => values.includes(value)));
+        card.hidden = !visible;
+        if (visible) shown++;
+      });
+
+      const order = [...cards];
+      if (sort.value === 'name') order.sort((a, b) => (a.dataset.search ?? '').localeCompare(b.dataset.search ?? ''));
+      if (sort.value === 'stock') order.sort((a, b) => Number(b.dataset.stock) - Number(a.dataset.stock));
+      order.forEach((card) => grid.appendChild(card));
+      count.textContent = shown + (shown === 1 ? ' tool' : ' tools');
+      empty.hidden = shown !== 0;
+
+      if (updateUrl) {
+        const url = new URL(location.href);
+        new Set(inputs.map(({ name }) => name)).forEach((name) => url.searchParams.delete(name));
+        inputs.filter(({ checked }) => checked).forEach(({ name, value }) => url.searchParams.append(name, value));
+        url.searchParams.delete('q');
+        url.searchParams.delete('sort');
+        if (search.value.trim()) url.searchParams.set('q', search.value.trim());
+        if (sort.value !== 'default') url.searchParams.set('sort', sort.value);
+        history.replaceState(null, '', url);
+      }
+    };
+
+    form.addEventListener('submit', (event) => event.preventDefault());
+    form.addEventListener('change', () => apply(true));
+    search.addEventListener('input', () => apply(true));
+    sort.addEventListener('change', () => apply(true));
+    form.querySelector('[data-filter-reset]')?.addEventListener('click', () => {
+      inputs.forEach((input) => { input.checked = false; });
+      search.value = '';
+      sort.value = 'default';
+      apply(true);
+    });
+    apply();
+  }
+</script>

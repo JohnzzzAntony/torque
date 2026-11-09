@@ -1,0 +1,412 @@
+{
+  "categories": [
+    {
+      "slug": "cnc-punching-tools",
+      "name": "CNC punching tools",
+      "short": "Punching tools",
+      "blurb": "Punches, dies and strippers for thick and thin turret machines.",
+      "intro": "Punches, dies and strippers for thick and thin turret machines. Tell us the machine model and we confirm what fits before quoting.",
+      "filters": [
+        { "key": "machine", "label": "Machine", "options": ["Amada", "Trumpf", "Murata", "Strippit"] },
+        { "key": "station", "label": "Station", "options": ["Thick turret", "Thin turret"] },
+        { "key": "tooltype", "label": "Tool", "options": ["Punch", "Die", "Stripper", "Form tool"] },
+        { "key": "shape", "label": "Shape", "options": ["Round", "Square", "Oblong", "Special"] },
+        { "key": "stock", "label": "Availability", "options": ["In stock"] }
+      ]
+    },
+    {
+      "slug": "press-brake-tools",
+      "name": "Press brake tools",
+      "short": "Press brake",
+      "blurb": "Punches, V-dies, special and sectional tools.",
+      "intro": "Straight and gooseneck punches, single and multi-V dies, and sectional sets. Send the machine and the bend you need to make.",
+      "filters": [
+        { "key": "tooltype", "label": "Tool", "options": ["Punch", "V-die", "Sectional", "Special tool"] },
+        { "key": "machine", "label": "Tool holder", "options": ["Amada", "Trumpf", "Wila", "Generic"] },
+        { "key": "stock", "label": "Availability", "options": ["In stock"] }
+      ]
+    },
+    {
+      "slug": "dies-and-tooling",
+      "name": "Dies and tooling",
+      "short": "Dies",
+      "blurb": "Standard and special dies for stamping and forming.",
+      "intro": "Blanking and form dies, inserts, retainers and shim sets. We quote complete dies and replacements for existing tooling.",
+      "filters": [
+        { "key": "tooltype", "label": "Type", "options": ["Stamping die", "Form die", "Component", "Insert"] },
+        { "key": "stock", "label": "Availability", "options": ["In stock"] }
+      ]
+    },
+    {
+      "slug": "bandsaw-blades",
+      "name": "Bandsaw blades",
+      "short": "Bandsaw blades",
+      "blurb": "Blades for steel, stainless and aluminium cutting.",
+      "intro": "Bi-metal, carbide-tipped and HSS blades by width, pitch and tooth form. Tell us the saw and the material.",
+      "filters": [
+        { "key": "material", "label": "Material", "options": ["Steel", "Stainless steel", "Aluminium"] },
+        { "key": "stock", "label": "Availability", "options": ["In stock"] }
+      ]
+    },
+    {
+      "slug": "industrial-moulds",
+      "name": "Industrial moulds",
+      "short": "Moulds",
+      "blurb": "Engineering-grade moulds and components.",
+      "intro": "Mould bases, blow mould components, ejector systems and guide sets. Ask about standard parts and specials to drawing.",
+      "filters": [
+        { "key": "tooltype", "label": "Type", "options": ["Mould base", "Mould component", "Ejector", "Guide component"] },
+        { "key": "stock", "label": "Availability", "options": ["In stock"] }
+      ]
+    },
+    {
+      "slug": "machine-tools",
+      "name": "Machine tools",
+      "short": "Machine tools",
+      "blurb": "Standard machine tools and workshop accessories.",
+      "intro": "Notchers, drills, deburring tools and consumables for the fabrication floor.",
+      "filters": [
+        { "key": "tooltype", "label": "Type", "options": ["Notcher", "Drill", "Deburring", "Consumable"] },
+        { "key": "stock", "label": "Availability", "options": ["In stock"] }
+      ]
+    }
+  ],
+  "products": [
+    {
+      "slug": "kt-rp-0100",
+      "category": "cnc-punching-tools",
+      "name": "Round punch",
+      "sku": "KT-RP-0100",
+      "spec": "Ø 10 mm · Station B · thick turret",
+      "machine": ["Amada", "Trumpf"],
+      "station": "Thick turret",
+      "tooltype": "Punch",
+      "shape": "Round",
+      "inStock": true,
+      "note": "Ground punch body with a hardened tip. Order the matching die as a pair."
+    },
+    {
+      "slug": "kt-rd-0100",
+      "category": "cnc-punching-tools",
+      "name": "Round die",
+      "sku": "KT-RD-0100",
+      "spec": "Ø 10 mm · clearance 0.20 mm · Station B",
+      "machine": ["Amada", "Trumpf"],
+      "station": "Thick turret",
+      "tooltype": "Die",
+      "shape": "Round",
+      "inStock": true,
+      "note": "Clearance is set for 2–3 mm mild steel. Tell us the material if you need a different fit."
+    },
+    {
+      "slug": "kt-op-0820",
+      "category": "cnc-punching-tools",
+      "name": "Oblong punch",
+      "sku": "KT-OP-0820",
+      "spec": "8 × 20 mm · Station B",
+      "machine": ["Amada", "Murata"],
+      "station": "Thick turret",
+      "tooltype": "Punch",
+      "shape": "Oblong",
+      "inStock": false,
+      "note": "Made to order. Lead time confirmed with the quote."
+    },
+    {
+      "slug": "kt-sp-1212",
+      "category": "cnc-punching-tools",
+      "name": "Square punch",
+      "sku": "KT-SP-1212",
+      "spec": "12 × 12 mm · Station C",
+      "machine": ["Amada", "Trumpf"],
+      "station": "Thick turret",
+      "tooltype": "Punch",
+      "shape": "Square",
+      "inStock": true
+    },
+    {
+      "slug": "kt-sd-1212",
+      "category": "cnc-punching-tools",
+      "name": "Square die",
+      "sku": "KT-SD-1212",
+      "spec": "12 × 12 mm · clearance 0.30 mm · Station C",
+      "machine": ["Amada", "Trumpf"],
+      "station": "Thick turret",
+      "tooltype": "Die",
+      "shape": "Square",
+      "inStock": true
+    },
+    {
+      "slug": "kt-st-0301",
+      "category": "cnc-punching-tools",
+      "name": "Stripper",
+      "sku": "KT-ST-0301",
+      "spec": "Ø 30 mm · Station C",
+      "machine": ["Amada"],
+      "station": "Thick turret",
+      "tooltype": "Stripper",
+      "shape": "Round",
+      "inStock": true
+    },
+    {
+      "slug": "kt-ft-0060",
+      "category": "cnc-punching-tools",
+      "name": "Lance and form tool",
+      "sku": "KT-FT-0060",
+      "spec": "60 mm · Station D",
+      "machine": ["Trumpf"],
+      "station": "Thick turret",
+      "tooltype": "Form tool",
+      "shape": "Special",
+      "inStock": false,
+      "note": "Up-and-form tool quoted against your part drawing."
+    },
+    {
+      "slug": "kt-rp-0605",
+      "category": "cnc-punching-tools",
+      "name": "Round punch, thin turret",
+      "sku": "KT-RP-0605",
+      "spec": "Ø 6 mm · Station B",
+      "machine": ["Murata", "Strippit"],
+      "station": "Thin turret",
+      "tooltype": "Punch",
+      "shape": "Round",
+      "inStock": true
+    },
+    {
+      "slug": "pb-p-0085",
+      "category": "press-brake-tools",
+      "name": "Straight punch",
+      "sku": "PB-P-0085",
+      "spec": "85° · 100 mm height · 835 mm length",
+      "machine": ["Amada"],
+      "tooltype": "Punch",
+      "inStock": true,
+      "note": "Standard straight punch for air bending. Hardened and ground."
+    },
+    {
+      "slug": "pb-gn-0060",
+      "category": "press-brake-tools",
+      "name": "Gooseneck punch",
+      "sku": "PB-GN-0060",
+      "spec": "60° gooseneck · 100 mm height",
+      "machine": ["Amada", "Trumpf"],
+      "tooltype": "Punch",
+      "inStock": true,
+      "note": "For return bends and box profiles that a straight punch cannot reach."
+    },
+    {
+      "slug": "pb-vd-30-16",
+      "category": "press-brake-tools",
+      "name": "30° V-die",
+      "sku": "PB-VD-30-16",
+      "spec": "16 mm V opening · 100 mm height",
+      "machine": ["Amada"],
+      "tooltype": "V-die",
+      "inStock": true
+    },
+    {
+      "slug": "pb-mv-0088",
+      "category": "press-brake-tools",
+      "name": "Multi-V die",
+      "sku": "PB-MV-0088",
+      "spec": "8 openings · V 6–20 mm",
+      "machine": ["Trumpf"],
+      "tooltype": "V-die",
+      "inStock": false
+    },
+    {
+      "slug": "pb-sp-0835",
+      "category": "press-brake-tools",
+      "name": "Sectional punch set",
+      "sku": "PB-SP-0835",
+      "spec": "835 mm · 5 sections",
+      "machine": ["Generic"],
+      "tooltype": "Sectional",
+      "inStock": true,
+      "note": "Split sections let you keep clear of existing bends."
+    },
+    {
+      "slug": "pb-wt-0090",
+      "category": "press-brake-tools",
+      "name": "Trumpf-style punch",
+      "sku": "PB-WT-0090",
+      "spec": "90° · 60 mm height",
+      "machine": ["Trumpf", "Wila"],
+      "tooltype": "Punch",
+      "inStock": false
+    },
+    {
+      "slug": "dt-bd-0201",
+      "category": "dies-and-tooling",
+      "name": "Blanking die set",
+      "sku": "DT-BD-0201",
+      "spec": "200 × 160 mm · 2 stations",
+      "tooltype": "Stamping die",
+      "inStock": false,
+      "note": "Quoted to your part drawing. Tool steel with guided pillars."
+    },
+    {
+      "slug": "dt-fd-0310",
+      "category": "dies-and-tooling",
+      "name": "Form die",
+      "sku": "DT-FD-0310",
+      "spec": "310 mm · radius form",
+      "tooltype": "Form die",
+      "inStock": true
+    },
+    {
+      "slug": "dt-di-0120",
+      "category": "dies-and-tooling",
+      "name": "Carbide die insert",
+      "sku": "DT-DI-0120",
+      "spec": "120 × 40 mm · carbide",
+      "tooltype": "Insert",
+      "inStock": true
+    },
+    {
+      "slug": "dt-pr-0045",
+      "category": "dies-and-tooling",
+      "name": "Punch retainer",
+      "sku": "DT-PR-0045",
+      "spec": "45 mm bore",
+      "tooltype": "Component",
+      "inStock": true
+    },
+    {
+      "slug": "dt-sh-0002",
+      "category": "dies-and-tooling",
+      "name": "Shimming set",
+      "sku": "DT-SH-0002",
+      "spec": "0.05–0.50 mm · 12 shims",
+      "tooltype": "Component",
+      "inStock": true
+    },
+    {
+      "slug": "bs-bm-3411",
+      "category": "bandsaw-blades",
+      "name": "Bi-metal blade",
+      "sku": "BS-BM-3411",
+      "spec": "34 × 1.1 mm · 4/6 TPI",
+      "material": "Steel",
+      "inStock": true,
+      "note": "General-purpose pitch for structural steel and thick-walled tube."
+    },
+    {
+      "slug": "bs-ct-2710",
+      "category": "bandsaw-blades",
+      "name": "Carbide-tipped blade",
+      "sku": "BS-CT-2710",
+      "spec": "27 × 0.9 mm · 3/4 TPI",
+      "material": "Stainless steel",
+      "inStock": true
+    },
+    {
+      "slug": "bs-ca-3425",
+      "category": "bandsaw-blades",
+      "name": "Carbide blade for aluminium",
+      "sku": "BS-CA-3425",
+      "spec": "34 × 1.1 mm · 6/10 TPI",
+      "material": "Aluminium",
+      "inStock": false
+    },
+    {
+      "slug": "bs-hs-2710",
+      "category": "bandsaw-blades",
+      "name": "HSS blade",
+      "sku": "BS-HS-2710",
+      "spec": "27 × 0.9 mm · 10/14 TPI",
+      "material": "Steel",
+      "inStock": true
+    },
+    {
+      "slug": "bs-co-2008",
+      "category": "bandsaw-blades",
+      "name": "Coil blade",
+      "sku": "BS-CO-2008",
+      "spec": "20 × 0.9 mm · 8/12 TPI",
+      "material": "Steel",
+      "inStock": true
+    },
+    {
+      "slug": "im-mb-0300",
+      "category": "industrial-moulds",
+      "name": "Injection mould base",
+      "sku": "IM-MB-0300",
+      "spec": "300 × 300 mm · 2-plate",
+      "tooltype": "Mould base",
+      "inStock": false
+    },
+    {
+      "slug": "im-bc-0120",
+      "category": "industrial-moulds",
+      "name": "Blow mould component",
+      "sku": "IM-BC-0120",
+      "spec": "120 mm neck · aluminium",
+      "tooltype": "Mould component",
+      "inStock": false
+    },
+    {
+      "slug": "im-ep-0050",
+      "category": "industrial-moulds",
+      "name": "Ejector pin set",
+      "sku": "IM-EP-0050",
+      "spec": "Ø 5 mm · 100 mm · set of 10",
+      "tooltype": "Ejector",
+      "inStock": true
+    },
+    {
+      "slug": "im-gp-0032",
+      "category": "industrial-moulds",
+      "name": "Guide pillar and bush",
+      "sku": "IM-GP-0032",
+      "spec": "Ø 32 mm",
+      "tooltype": "Guide component",
+      "inStock": true
+    },
+    {
+      "slug": "mt-nt-0100",
+      "category": "machine-tools",
+      "name": "Sheet notcher",
+      "sku": "MT-NT-0100",
+      "spec": "100 mm · 16 gauge",
+      "tooltype": "Notcher",
+      "inStock": true
+    },
+    {
+      "slug": "mt-bd-0016",
+      "category": "machine-tools",
+      "name": "Bench drill press",
+      "sku": "MT-BD-0016",
+      "spec": "16 mm chuck · 550 W",
+      "tooltype": "Drill",
+      "inStock": false
+    },
+    {
+      "slug": "mt-md-0035",
+      "category": "machine-tools",
+      "name": "Magnetic base drill",
+      "sku": "MT-MD-0035",
+      "spec": "35 mm · 1,200 W",
+      "tooltype": "Drill",
+      "inStock": true
+    },
+    {
+      "slug": "mt-db-0001",
+      "category": "machine-tools",
+      "name": "Deburring tool",
+      "sku": "MT-DB-0001",
+      "spec": "Swivel blade · 3.2 mm",
+      "tooltype": "Deburring",
+      "inStock": true
+    },
+    {
+      "slug": "mt-gw-0200",
+      "category": "machine-tools",
+      "name": "Tool grinding wheel",
+      "sku": "MT-GW-0200",
+      "spec": "200 × 20 mm · 46 grit",
+      "tooltype": "Consumable",
+      "inStock": true
+    }
+  ]
+}

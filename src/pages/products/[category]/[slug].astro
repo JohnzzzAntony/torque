@@ -1,0 +1,88 @@
+---
+import Base from '../../../layouts/Base.astro';
+import PageHero from '../../../components/PageHero.astro';
+import Breadcrumbs from '../../../components/Breadcrumbs.astro';
+import ProductCard from '../../../components/ProductCard.astro';
+import QuoteBar from '../../../components/QuoteBar.astro';
+import Icon from '../../../components/Icon.astro';
+import { whatsappLink } from '../../../data/site';
+import catalog from '../../../data/products.json';
+import { products, productLabel, type CatalogProduct } from '../../../data/catalog';
+
+export function getStaticPaths() {
+  return products.map((product) => ({
+    params: { category: product.category, slug: product.slug },
+    props: { product },
+  }));
+}
+
+const { product } = Astro.props as { product: CatalogProduct };
+const category = catalog.categories.find((entry) => entry.slug === product.category)!;
+const related = products.filter((entry) => entry.category === product.category && entry.slug !== product.slug).slice(0, 3);
+const image = '/images/' + category.slug + '.webp';
+const categoryHref = '/products/' + category.slug + '/';
+const availability = product.verified && product.inStock ? 'In stock' : 'Confirm with quote';
+const rows = [
+  { label: 'Part number', value: product.verified && product.sku },
+  { label: 'Tool type', value: product.tooltype },
+  { label: product.verified ? 'Specification' : 'Example specification', value: product.spec },
+  { label: 'Station', value: product.station },
+  { label: 'Shape', value: product.shape },
+  { label: 'Material', value: product.material },
+  { label: product.verified ? 'Compatibility' : 'Machine or holder examples', value: product.machine?.join(', ') },
+  { label: 'Availability', value: availability },
+].filter((row) => row.value);
+const waMessage = "Hello Torque, I'd like a quote for " + productLabel(product) + '. Configuration: ' + product.spec + '. Machine: ';
+---
+
+<Base title={productLabel(product) + ' | ' + category.name + ' | Torque Dubai'} description={'Explore ' + product.name.toLowerCase() + ' tooling and request a quote from Torque Moulds Factory in Dubai.'} image={image}>
+  <PageHero eyebrow={category.name} title={product.name} lede={product.verified ? product.spec : 'Configuration example · ' + product.spec} compact>
+    <Breadcrumbs slot="breadcrumb" links={[{ name: 'Products', href: '/products/' }, { name: category.name, href: categoryHref }]} current={product.name} />
+  </PageHero>
+
+  <div class="container">
+    <div class="detail-grid">
+      <div class="detail-body">
+        <figure class="editorial-image detail-image">
+          <img src={image} alt={'Representative illustration of ' + category.name.toLowerCase()} width="508" height="508" />
+          <figcaption>{category.name} · category illustration</figcaption>
+        </figure>
+        <h2>Tool specifications</h2>
+        {product.verified && product.note && <p>{product.note}</p>}
+        <dl class="spec-list">
+          {rows.map((row) => <div><dt>{row.label}</dt><dd>{row.value}</dd></div>)}
+        </dl>
+        {!product.verified && <p class="service-note">Use this configuration as a reference. Share your actual dimensions and machine model so we can confirm the tool that fits.</p>}
+      </div>
+
+      <aside class="buy-box">
+        <p class="eyebrow">Pricing and fit</p>
+        <h2>Request this configuration.</h2>
+        <p>Add this tool to your quote or message us with your machine model and requirements.</p>
+        <button class="btn btn-primary btn-block" type="button" data-quote-add data-sku={product.sku} aria-pressed="false" disabled>Add to quote</button>
+        <a class="btn btn-outline btn-block" href={whatsappLink(waMessage)}>Ask on WhatsApp <Icon name="diagonal" size={16} /></a>
+        <ul class="detail-checklist">
+          <li>Machine make and model</li>
+          <li>Tool dimensions or part number</li>
+          <li>Quantity and material to process</li>
+        </ul>
+      </aside>
+    </div>
+
+    <section class="related">
+      <div class="section-head section-head--row">
+        <div><p class="eyebrow">Also in this category</p><h2>Related configurations.</h2></div>
+        <a class="link-more" href={categoryHref}>View all {category.name.toLowerCase()}</a>
+      </div>
+      <div class="card-grid">
+        {related.map((entry) => <ProductCard product={entry} />)}
+      </div>
+    </section>
+  </div>
+  <QuoteBar />
+</Base>
+
+<script>
+  import { initQuoteButtons } from '../../../lib/quote';
+  initQuoteButtons();
+</script>

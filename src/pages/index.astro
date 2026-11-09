@@ -1,0 +1,146 @@
+---
+import Base from '../layouts/Base.astro';
+import '../styles/home.css';
+import CategoryGrid from '../components/CategoryGrid.astro';
+import Icon from '../components/Icon.astro';
+import { counterLocation } from '../data/site';
+import catalog from '../data/products.json';
+
+const finderFilters = catalog.categories[0].filters.filter((filter) => filter.key !== 'stock');
+
+const services = [
+  { icon: 'box', title: 'Dubai tooling counter', text: 'Ask about pickup or delivery' },
+  { icon: 'target', title: 'Machine fit checked', text: 'Compatibility confirmed before quoting' },
+  { icon: 'drawing', title: 'Made to drawing', text: 'Special tooling for your application' },
+] as const;
+
+const steps = [
+  { title: 'Share your requirements', text: 'Choose a catalog tool or share your machine model, part number or drawing.' },
+  { title: 'We confirm the fit', text: 'We check compatibility, stock and the lead time for your tooling.' },
+  { title: 'Get a written quote', text: 'Receive a written price, then collect in Al Quoz or arrange delivery.' },
+];
+---
+
+<Base
+  title="Torque Moulds Factory | Precision Sheet-Metal Tooling in Dubai"
+  description="CNC punching tools, press brake tooling, dies and bandsaw blades from Al Quoz, Dubai. Browse the catalog or request a quote for custom tooling."
+>
+  <section class="home-hero" aria-labelledby="home-title">
+    <picture class="home-hero-image">
+      <source media="(max-width: 680px)" srcset="/images/cnc-machining-mobile.webp" />
+      <img src="/images/cnc-machining.webp" alt="CNC milling spindle machining a steel component" width="1536" height="1024" fetchpriority="high" />
+    </picture>
+    <div class="container home-hero-inner">
+      <div class="home-hero-copy">
+        <p class="eyebrow eyebrow--light">Industrial tooling <span class="hero-label-divider"></span> Dubai, UAE</p>
+        <h1 id="home-title">Precision tooling.<br /><span>Built for the floor.</span></h1>
+        <p class="lede">CNC punches, press brake tools, dies and blades for UAE sheet-metal fabricators. Quoted from Al Quoz and matched to your machine.</p>
+        <div class="hero-actions">
+          <a class="btn btn-primary" href="/products/">Explore tooling <Icon name="arrow" size={18} /></a>
+          <a class="btn btn-ghost-light" href="/request-quote/">Request a quote <Icon name="diagonal" size={17} /></a>
+        </div>
+      </div>
+      <div class="hero-caption" aria-hidden="true">
+        <span>FIG. 01</span>
+        <strong>CNC steel machining</strong>
+      </div>
+    </div>
+  </section>
+
+  <section class="service-strip" aria-label="Tooling services">
+    <ul class="container service-grid">
+      {services.map((service) => (
+        <li>
+          <span class="service-icon"><Icon name={service.icon} size={22} /></span>
+          <div><strong>{service.title}</strong><span>{service.text}</span></div>
+        </li>
+      ))}
+    </ul>
+  </section>
+
+  <section class="section home-catalog" aria-labelledby="catalog-title">
+    <div class="container">
+      <div class="section-head section-head--row">
+        <div>
+          <p class="eyebrow">01 / Product catalog</p>
+          <h2 id="catalog-title">Tools for every operation.</h2>
+          <p>Browse six tooling families for punching, bending, forming and cutting.</p>
+        </div>
+        <a class="btn btn-outline" href="/products/">View full catalog <Icon name="diagonal" size={17} /></a>
+      </div>
+      <CategoryGrid />
+    </div>
+  </section>
+
+  <section class="section custom-feature" aria-labelledby="custom-title">
+    <div class="container custom-feature-grid">
+      <figure class="custom-feature-image">
+        <img src="/images/custom-tooling.webp" alt="A technician measures a machined steel die with calipers" width="1100" height="733" loading="lazy" decoding="async" />
+      </figure>
+      <div class="custom-feature-copy">
+        <p class="eyebrow eyebrow--light">02 / Custom tooling</p>
+        <h2 id="custom-title">Made to your drawing.</h2>
+        <p>Send a DXF, DWG, PDF or a dimensioned photo. We’ll review the part, check the machine fit and quote the tool with a lead time.</p>
+        <a class="btn btn-primary" href="/custom-tooling/">Explore custom tooling <Icon name="arrow" size={18} /></a>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" aria-labelledby="finder-title">
+    <div class="container">
+      <div class="finder">
+        <div class="section-head">
+          <p class="eyebrow">03 / CNC tool finder</p>
+          <h2 id="finder-title">Find tools for your machine.</h2>
+          <p>Filter CNC punching tools by machine brand, station, tool type or shape.</p>
+        </div>
+        <form class="finder-form" action="/products/cnc-punching-tools/" method="get">
+          {finderFilters.map((filter) => (
+            <div class="finder-field">
+              <label for={'finder-' + filter.key}>{filter.key === 'machine' ? 'Machine brand' : filter.label}</label>
+              <select id={'finder-' + filter.key} name={filter.key}>
+                <option value="">Any</option>
+                {filter.options.map((option) => <option value={option}>{option}</option>)}
+              </select>
+            </div>
+          ))}
+          <button class="btn btn-primary" type="submit">Find tools <Icon name="arrow" size={18} /></button>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <section class="section quote-process" aria-labelledby="process-title">
+    <div class="container">
+      <div class="section-head section-head--row">
+        <div>
+          <p class="eyebrow">04 / Requests and pricing</p>
+          <h2 id="process-title">From requirement to quote.</h2>
+        </div>
+        <a class="link-more" href="/industries/">Industries we serve</a>
+      </div>
+      <ol class="steps">
+        {steps.map((step) => (
+          <li class="step">
+            <h3>{step.title}</h3>
+            <p>{step.text}</p>
+          </li>
+        ))}
+      </ol>
+    </div>
+  </section>
+
+  <section class="cta-band home-cta">
+    <div class="container">
+      <div>
+        <p class="eyebrow eyebrow--light">{counterLocation}</p>
+        <h2>Let’s talk tooling.</h2>
+        <p>Contact our Al Quoz counter or send your requirements to the Torque team.</p>
+      </div>
+      <div class="hero-actions">
+        <a class="btn btn-primary" href="/request-quote/">Request a quote <Icon name="diagonal" size={18} /></a>
+        <a class="btn btn-ghost-light" href="/contact/">Contact the counter</a>
+      </div>
+    </div>
+  </section>
+</Base>

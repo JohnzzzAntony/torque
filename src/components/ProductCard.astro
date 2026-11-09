@@ -1,0 +1,35 @@
+---
+import { productPath, type CatalogProduct } from '../data/catalog';
+import Icon from './Icon.astro';
+
+interface Props {
+  product: CatalogProduct;
+}
+
+const { product } = Astro.props;
+const href = productPath(product);
+const inStock = product.verified && product.inStock;
+---
+
+<article
+  class="product-card"
+  data-product
+  data-stock={inStock ? '1' : '0'}
+  data-machine={product.machine?.join('|') ?? ''}
+  data-station={product.station ?? ''}
+  data-tooltype={product.tooltype ?? ''}
+  data-shape={product.shape ?? ''}
+  data-material={product.material ?? ''}
+  data-search={[product.name, product.spec, product.tooltype, product.verified && product.sku].filter(Boolean).join(' ')}
+>
+  <span class:list={['stock', { 'is-in': inStock }]}>
+    {product.verified ? (inStock ? 'In stock' : 'Order on request') : 'Configuration example'}
+  </span>
+  <h3><a href={href}>{product.name}</a></h3>
+  {product.verified && <span class="sku">{product.sku}</span>}
+  <p class="spec">{product.spec}</p>
+  <div class="card-actions">
+    <button class="btn btn-outline btn-sm" type="button" data-quote-add data-sku={product.sku} aria-pressed="false" disabled>Add to quote</button>
+    <a class="link-more product-details-link" href={href} aria-label={'View details for ' + product.name}>Details <Icon name="diagonal" size={15} /></a>
+  </div>
+</article>

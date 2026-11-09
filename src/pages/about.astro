@@ -1,0 +1,56 @@
+---
+import Base from '../layouts/Base.astro';
+import PageHero from '../components/PageHero.astro';
+import Breadcrumbs from '../components/Breadcrumbs.astro';
+import QuoteBand from '../components/QuoteBand.astro';
+import Icon from '../components/Icon.astro';
+import { counterLocation, site } from '../data/site';
+
+const approach = [
+  { icon: 'target', title: 'Start with the machine', text: 'Share the make, model and holder or station so we can check fit before quoting.' },
+  { icon: 'drawing', title: 'Work from the part', text: 'Send a drawing or dimensioned photo for special tools, replacement dies or mould components.' },
+  { icon: 'box', title: 'Plan the handover', text: 'We confirm availability, lead time and pickup or delivery options with your quote.' },
+] as const;
+---
+
+<Base title="About Torque Moulds Factory | Industrial Tooling in Dubai" description="Meet Torque Moulds Factory, an Al Quoz tooling supplier for UAE sheet-metal and fabrication shops.">
+  <PageHero eyebrow="About Torque" title="Tooling for the work you do." lede="We help UAE fabrication shops source tools for the machines they run and the parts they make." image="/images/cnc-machining.webp">
+    <Breadcrumbs slot="breadcrumb" current="About" />
+  </PageHero>
+
+  <section class="section">
+    <div class="container editorial-grid">
+      <div>
+        <p class="eyebrow">01 / Our work</p>
+        <h2>From a replacement punch to a custom die.</h2>
+        <p class="editorial-lede">From our tooling counter in {counterLocation}, we help buyers source CNC punching tools, press brake punches and dies, bandsaw blades, mould components and workshop tools.</p>
+        <p>For an existing tool, share the part number and machine model. For a new job, tell us the operation and material. We can quote KETEC punching tools and check alternatives against the requirements you provide.</p>
+        <a class="link-more" href="/products/">Explore the catalog</a>
+      </div>
+      <figure class="editorial-image">
+        <img src="/images/dies-and-tooling.webp" width="508" height="508" loading="lazy" alt="Illustration of a guided steel stamping die assembly" />
+        <figcaption>Guided stamping die · representative illustration</figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <section class="section section-tint">
+    <div class="container">
+      <div class="section-head">
+        <p class="eyebrow">02 / How we work</p>
+        <h2>A quote built around your job.</h2>
+      </div>
+      <div class="card-grid">
+        {approach.map((item) => (
+          <article class="info-card">
+            <span class="info-icon"><Icon name={item.icon} size={23} /></span>
+            <h3>{item.title}</h3>
+            <p>{item.text}</p>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <QuoteBand eyebrow={counterLocation} title="Talk to the tooling counter." description={site.hours[0].days + ' · ' + site.hours[0].time + '. Contact us for location and pickup details.'} link="/contact/" label="Contact Torque" />
+</Base>

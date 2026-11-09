@@ -1,0 +1,16 @@
+---
+interface Props {
+  links?: { name: string; href: string }[];
+  current: string;
+}
+
+const { links = [], current } = Astro.props;
+---
+
+<nav aria-label="Breadcrumb">
+  <ol class="breadcrumb">
+    <li><a href="/">Home</a></li>
+    {links.map(({ name, href }) => <li><a href={href}>{name}</a></li>)}
+    <li aria-current="page">{current}</li>
+  </ol>
+</nav>

@@ -1,0 +1,71 @@
+---
+import HeroDrawing from './HeroDrawing.astro';
+---
+
+<div class="hero-visual" data-hero-visual>
+  <div class="hero-visual-glow" aria-hidden="true"></div>
+  <canvas class="hero-canvas" data-hero-canvas aria-label="Interactive 3D punch and die assembly"></canvas>
+
+  <div class="hero-visual-fallback" data-hero-fallback>
+    <HeroDrawing />
+    <p class="hero-fallback-note">Static drawing of a punch and die.</p>
+  </div>
+
+  <div class="hero-visual-ui">
+    <span class="fig">Fig. 01 — Punch &amp; die</span>
+    <button class="scene-toggle" type="button" data-scene-toggle aria-pressed="false">
+      Exploded view
+    </button>
+    <span class="scene-hint" data-scene-hint>Drag to rotate</span>
+  </div>
+</div>
+
+<script>
+  const canvas = document.querySelector<HTMLCanvasElement>('[data-hero-canvas]');
+  const visual = document.querySelector<HTMLElement>('[data-hero-visual]');
+  const toggle = document.querySelector<HTMLButtonElement>('[data-scene-toggle]');
+
+  function webglAvailable(): boolean {
+    try {
+      const probe = document.createElement('canvas');
+      return Boolean(
+        window.WebGLRenderingContext &&
+          (probe.getContext('webgl2') || probe.getContext('webgl')),
+      );
+    } catch {
+      return false;
+    }
+  }
+
+  function loadScene(canvas: HTMLCanvasElement, visual: HTMLElement) {
+    if (!webglAvailable()) return;
+    const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    void import('../lib/hero-scene')
+      .then(({ initHeroScene }) => {
+        const scene = initHeroScene(canvas, {
+          reducedMotion,
+          onReady: () => visual.classList.add('has-3d'),
+        });
+
+        toggle?.addEventListener('click', () => {
+          const next = toggle.getAttribute('aria-pressed') !== 'true';
+          toggle.setAttribute('aria-pressed', String(next));
+          toggle.textContent = next ? 'Assembled view' : 'Exploded view';
+          scene.setExploded(next);
+        });
+      })
+      .catch(() => {
+        visual.classList.remove('has-3d');
+      });
+  }
+
+  if (canvas && visual) {
+    const observer = new IntersectionObserver(([entry]) => {
+      if (!entry?.isIntersecting) return;
+      observer.disconnect();
+      loadScene(canvas, visual);
+    }, { rootMargin: "200px" });
+    observer.observe(visual);
+  }
+</script>
