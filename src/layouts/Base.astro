@@ -2,6 +2,7 @@
 import '../styles/global.css';
 import '../styles/pages.css';
 import Icon from '../components/Icon.astro';
+import Brand from '../components/Brand.astro';
 import { site, nav, counterLocation, whatsappLink, DEFAULT_WHATSAPP_MESSAGE } from '../data/site';
 import catalog from '../data/products.json';
 
@@ -63,7 +64,7 @@ const localBusiness = {
     <meta name="description" content={description} />
     {canonical && !noIndex && <link rel="canonical" href={canonical} />}
     {(!canonical || noIndex) && <meta name="robots" content="noindex,follow" />}
-    <meta name="theme-color" content="#141616" />
+    <meta name="theme-color" content="#0B2D6B" />
     <meta property="og:type" content="website" />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
@@ -81,7 +82,7 @@ const localBusiness = {
       <div class="container utility-inner">
         <span class="utility-place">
           <Icon name="pin" size={14} />
-          {counterLocation}
+          {counterLocation}<span class="utility-tagline">Precision tooling. Personal service.</span>
         </span>
         <span class="utility-links">
           <a href={`tel:${site.landline.number}`}><Icon name="phone" size={13} /> {site.landline.display}</a>
@@ -92,13 +93,7 @@ const localBusiness = {
 
     <header class="site-header" data-header>
       <div class="container header-inner">
-        <a class="brand" href="/">
-          <img class="brand-symbol" src="/favicon.svg" width="39" height="39" alt="" />
-          <span class="brand-type">
-            <span class="brand-mark">{site.wordmark}</span>
-            <span class="brand-sub">{site.wordmarkSub}</span>
-          </span>
-        </a>
+        <Brand />
 
         <nav class="nav" aria-label="Main">
           <a href="/" aria-current={path === "/" ? "page" : undefined}>Home</a>
@@ -167,13 +162,7 @@ const localBusiness = {
       <div class="container">
         <div class="footer-top">
           <div class="footer-brand">
-            <a class="brand" href="/">
-              <img class="brand-symbol" src="/favicon.svg" width="39" height="39" alt="" />
-              <span class="brand-type">
-                <span class="brand-mark">{site.wordmark}</span>
-                <span class="brand-sub">{site.wordmarkSub}</span>
-              </span>
-            </a>
+            <Brand />
             <p>{site.tagline}</p>
             <a class="footer-wa" href={whatsappLink(DEFAULT_WHATSAPP_MESSAGE)}>
               WhatsApp {site.whatsapp.display}
@@ -200,7 +189,7 @@ const localBusiness = {
               </ul>
             </div>
             <div class="footer-col">
-              <h2>Counter</h2>
+              <h2>Visit &amp; connect</h2>
               <ul>
                 {site.address.street && <li>{site.address.street}</li>}
                 <li>{counterLocation}</li>

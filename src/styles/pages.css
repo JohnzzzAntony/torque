@@ -16,10 +16,8 @@
   text-decoration: underline;
 }
 
-.nav summary.is-current,
-.site-footer a:hover {
-  color: var(--accent);
-}
+.nav summary.is-current { color: var(--blue); }
+.site-footer a:hover { color: var(--copper-light); }
 
 .mobile-panel a[aria-current='page'] {
   color: var(--accent-text);
@@ -125,8 +123,8 @@
   width: 46px;
   height: 46px;
   border-radius: var(--radius-sm);
-  border: 1px solid #a54c2a58;
-  background: #ff8b4815;
+  border: 1px solid var(--line);
+  background: var(--blue-tint);
   color: var(--accent-text);
   font-weight: 800;
 }
@@ -141,7 +139,7 @@
   border-radius: var(--radius);
   background: repeating-linear-gradient(0deg, #ffffff0c 0 1px, transparent 1px 48px),
     repeating-linear-gradient(90deg, #ffffff0c 0 1px, transparent 1px 48px),
-    radial-gradient(at 95% 0, #5f3626, var(--ink-900) 62%);
+    linear-gradient(135deg, var(--navy), var(--ink-950));
   color: var(--white);
 }
 
@@ -155,8 +153,8 @@
 }
 
 .location-card .info-icon {
-  color: var(--accent);
-  border-color: #ff8b4870;
+  color: var(--copper-light);
+  border-color: var(--blue-light);
   margin-bottom: 22px;
 }
 
@@ -243,7 +241,7 @@
 }
 
 .filter-panel .facet label {
-  min-height: 32px;
+  min-height: 44px;
 }
 
 .catalog-controls {
@@ -306,7 +304,7 @@
 
 .btn[data-quote-add].is-added {
   border-color: var(--accent-text);
-  background: #ff8b4824;
+  background: var(--blue-tint);
   color: var(--accent-text);
 }
 
@@ -504,3 +502,18 @@
     grid-column: 2;
   }
 }
+
+.info-card { box-shadow: var(--shadow-1); border-top: 2px solid var(--line); }
+.info-card h2, .info-card h3 { color: var(--navy); line-height: 1.3; }
+.info-icon, .info-index { border-radius: 50%; width: 50px; height: 50px; }
+.info-index { font-size: 0.9rem; font-variant-numeric: tabular-nums; }
+.editorial-image figcaption { color: var(--blue-light); background: var(--navy); }
+.filter-panel summary { color: var(--navy); background: var(--blue-tint); }
+.filter-panel { top: 116px; }
+.catalog-heading h2, .detail-body h2, .quote-form h2, .side-card h2 { color: var(--navy); }
+.spec-list dt { color: var(--navy); }
+.spec-list div:nth-child(odd) { background: var(--steel-2); }
+.spec-list div { padding-inline: 14px; }
+.result-panel { border-top: 3px solid var(--blue); }
+.result-panel h2 { color: var(--navy); }
+@media (max-width: 1080px) { .filter-panel { top: auto; } }
