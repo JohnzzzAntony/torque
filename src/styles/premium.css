@@ -1,16 +1,15 @@
 /* Shared precision-editorial design system. */
-@font-face { font-family: 'Barlow Condensed'; src: url('/fonts/barlow-condensed-semibold.ttf') format('truetype'); font-weight: 600; font-style: normal; font-display: swap; }
 :root {
   --navy: #101f33; --ink-950: #0b1523; --ink-900: #101f33; --ink-850: #172b42; --ink-800: #243b50;
   --blue: #24516b; --blue-hover: #173a50; --blue-light: #c1d1dc; --blue-tint: #edf1f2;
   --copper: #c87641; --copper-button: #a34d23; --copper-hover: #863c1a; --copper-light: #e6ac82;
   --steel-2: #f4f3ef; --paper: #fff; --ink: #172536; --muted: #586370; --muted-2: #646e78; --line: #dedfdb; --line-2: #b9c2c7;
-  --radius: 3px; --radius-sm: 2px; --radius-lg: 5px; --font-head: 'Barlow Condensed', sans-serif; --font-body: Manrope, sans-serif; --font-label: Manrope, sans-serif;
+  --radius: 3px; --radius-sm: 2px; --radius-lg: 5px; --font-body: Manrope, sans-serif; --font-head: var(--font-body); --font-label: var(--font-body);
   --max: 1440px; --shadow-1: 0 3px 12px #101f3305; --shadow-2: 0 18px 45px -24px #101f3340;
 }
-h1,h2,h3,h4 { font-weight: 600; letter-spacing: -0.015em; }
-h2 { font-size: clamp(2.6rem, 4.5vw, 4.2rem); line-height: 1.03; }
-h3 { font-size: 1.65rem; }
+h1,h2,h3,h4 { font-weight: 700; letter-spacing: -0.045em; }
+h2 { font-size: clamp(2rem, 3.5vw, 3.2rem); line-height: 1.15; }
+h3 { font-size: 1.3rem; }
 .btn { font-family: var(--font-body); font-size: .84rem; font-weight: 700; gap: 18px; min-height: 50px; }
 .utility { background: var(--ink-950); }
 .utility-inner { min-height: 35px; font-size: .68rem; }
@@ -26,19 +25,19 @@ h3 { font-size: 1.65rem; }
 .section-head .eyebrow { color: var(--copper-hover); }
 .cat-card { box-shadow: none; }
 .cat-content { padding: 25px; align-items: flex-start; }
-.cat-card h3 { font-size: 1.8rem; }
+.cat-card h3 { font-size: 1.35rem; }
 .cat-card p { font-size: .85rem; }
 .cat-index { background: var(--ink-950); font-family: var(--font-body); font-weight: 500; }
 .cat-arrow { border-radius: 50%; }
 .cat-card:hover .cat-arrow { background: var(--navy); border-color: var(--navy); }
-.page-hero h1 { font-size: clamp(3.5rem,7vw,6rem); }
+.page-hero h1 { font-size: clamp(2.25rem,5vw,4.5rem); }
 .info-card { border-radius: var(--radius); box-shadow: none; }
-.info-card h3 { font-size: 1.9rem; }
+.info-card h3 { font-size: 1.4rem; }
 .footer-col h2 { font-family: var(--font-body); letter-spacing: .1em; }
 .site-footer { background: var(--ink-950); }
 .site-footer .brand { padding: 8px 12px; width: 230px; }
 .site-footer .footer-brand p { margin-top: 22px; }
-.cta-band h2 { font-size: clamp(3rem,5vw,5rem); }
+.cta-band h2 { font-size: clamp(2.25rem,4vw,3.75rem); }
 .mobile-nav summary { font-family: var(--font-body); }
 .mobile-cat,.mobile-link { font-family: var(--font-body); }
 :focus-visible { outline-width: 3px; }
@@ -48,9 +47,9 @@ html { scroll-padding-top: 110px; }
   .utility-inner { min-height: 32px; font-size: .6rem; }
   .brand { width: 176px; }
   .mobile-nav summary { padding: 9px 11px; }
-  .section-head h2 { font-size: 2.8rem; }
+  .section-head h2 { font-size: 2.1rem; }
   .cat-content { padding: 22px; }
-  .cat-card h3 { font-size: 1.75rem; }
+  .cat-card h3 { font-size: 1.3rem; }
   .footer-cols { grid-template-columns: 1fr 1fr; }
   .footer-col:last-child { grid-column: 1 / -1; }
 }
