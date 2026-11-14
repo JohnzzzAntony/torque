@@ -1,6 +1,7 @@
 ---
 import '../styles/global.css';
 import '../styles/pages.css';
+import '../styles/premium.css';
 import Icon from '../components/Icon.astro';
 import Brand from '../components/Brand.astro';
 import { site, nav, counterLocation, whatsappLink, DEFAULT_WHATSAPP_MESSAGE } from '../data/site';
@@ -64,7 +65,7 @@ const localBusiness = {
     <meta name="description" content={description} />
     {canonical && !noIndex && <link rel="canonical" href={canonical} />}
     {(!canonical || noIndex) && <meta name="robots" content="noindex,follow" />}
-    <meta name="theme-color" content="#0B2D6B" />
+    <meta name="theme-color" content="#101f33" />
     <meta property="og:type" content="website" />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
@@ -72,6 +73,7 @@ const localBusiness = {
     {shareImage && <meta property="og:image" content={shareImage} />}
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="preload" href="/fonts/manrope.ttf" as="font" type="font/ttf" crossorigin />
+    <link rel="preload" href="/fonts/barlow-condensed-semibold.ttf" as="font" type="font/ttf" crossorigin />
     {canonical && path === "/" && <script type="application/ld+json" is:inline set:html={JSON.stringify(localBusiness)} />}
     <slot name="head" />
   </head>
